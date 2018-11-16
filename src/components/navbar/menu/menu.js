@@ -26,7 +26,7 @@ class Menu extends React.Component {
                 <a className={classesOfButton} onClick={this.handleOpenOrClose}>
                     Menu
                 </a>
-                <ul className={classesOfOptions}>
+                <ul className={classesOfOptions} onClick={this.handleOpenOrClose}>
                     <li>
                         <Link to='/quem-somos'>
                             Quem somos

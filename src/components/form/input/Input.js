@@ -15,14 +15,22 @@ import './Input.css'
 // }
 
 //EXEMPLO - utilizando os componentes e classes do React
-class Input extends React.Component {
+class Input extends Component {
     constructor(props){
         super(props)
         this.state={
             message : null} //estado natural do código quando a página carrega 
     //this.handleChange = this.handleChange.bind(this) // se for utilizado a arrow function, n precisa dessa função
-    
+         this.value = ""
+
     }
+
+    getValue = () => {
+        return this.value 
+
+    }
+
+
     hasError = () => {
         if(this.state.message === null || this.state.message !=='') {
             return true 
@@ -32,18 +40,17 @@ class Input extends React.Component {
     }
     //--validação do input
     handleChange = (e) => { //gaurdar a função para ser usada com o this lá embaixo
-        const value = e.target.value
+        this.value = e.target.value
         const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         //console.log('hello onchange', value)
         let message = ''
         
-        if(this.props.required && value.trim() === '') { //tirar os espaços em branco e ter a tag 'required' no dom/html
+        if(this.props.required && this.value.trim() === '') { //tirar os espaços em branco e ter a tag 'required' no dom/html
             message = 'Campo Obrigatório' //mensagem que vai aparecer
-        } else if(value && this.props.minLength && value.length < (this.props.minLength)) {
+        } else if(this.value && this.props.minLength && this.value.length < (this.props.minLength)) {
             message = `Digite pelo menos ${this.props.minLength} caracteres`
-        } else if(this.props.type ==='email' && !regex.test(value)) { //testa a função regex, e se for falso, dá uma mensagem de erro
-            message = 'Digite um e-mail válido'
-            
+        } else if(this.props.type ==='email' && !regex.test(this.value)) { //testa a função regex, e se for falso, dá uma mensagem de erro
+            message = 'Digite um e-mail válido' 
         }
 
         this.setState({ message : message }, this.props.onChange) //callback  
