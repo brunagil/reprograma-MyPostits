@@ -1,6 +1,8 @@
 import React from 'react'
 import Form from '../../components/form'
 import Container from '../../components/container/container'
+import { setUser } from '../../infra/local-storage'
+import signupUser from '../../apis/signup.api'
 
 // function Signup() {
 //   return(
@@ -22,21 +24,45 @@ import Container from '../../components/container/container'
 // }
 
 class Signup extends React.Component {
-    constructor() {
-      super() 
-      this.state= { disabled : true }
-      this.name = React.createRef()
-      this.email = React.createRef() 
-      this.phone = React.createRef()
-      this.password = React.createRef()
+  constructor() {
+    super() 
+    this.state= { disabled : true }
+    this.name = React.createRef()
+    this.email = React.createRef() 
+    this.phone = React.createRef()
+    this.password = React.createRef()
+  }
 
-    }
+  handleSubmit = (e) => {
+    e.preventDefault()
+  
+    const inputName = this.name.current
+    const inputEmail = this.email.current 
+    const inputPhone = this.phone.current
+    const inputPassword = this.password.current
 
-    onDisabledButton = () => {
-      const inputName = this.name.current
-      const inputEmail = this.email.current 
-      const inputPhone = this.phone.current
-      const inputPassword = this.password.current
+  const user = {
+    name: inputName.getValue(),
+    email: inputEmail.getValue(),
+    phone: inputPhone.getValue(),
+    password: inputPassword.getValue(),
+  }
+   
+    signupUser(user)
+      .then((response) => {
+        setUser({email : user.email})
+          this.props.history.push('/') 
+      })
+    .catch((error) => {
+        console.log(error)
+      })  
+  }
+
+  onDisabledButton = () => {
+    const inputName = this.name.current
+    const inputEmail = this.email.current 
+    const inputPhone = this.phone.current
+    const inputPassword = this.password.current
   
       if (inputName.hasError() 
       || inputEmail.hasError()
@@ -47,13 +73,13 @@ class Signup extends React.Component {
       } else {
         this.setState({disabled : false}) 
       }
-
+   
     }
-
+  
     render() { //aqui dentro retorna os componentes a serem renderizados
       return (
-        <Container>
-        <Form title='Cadastre-se' text='Preencha os dados com suas informações'>
+        <Container> 
+        <Form title='Cadastre-se' text='Preencha os dados com suas informações' onSubmit={this.handleSubmit}>
             <Form.Label htmlFor='name'>Nome</Form.Label>
             <Form.Input ref={this.name} id='name' type='text' onChange={this.onDisabledButton} required></Form.Input>
 
@@ -74,9 +100,5 @@ class Signup extends React.Component {
     )
   }
 }
-
-
-
-
 
 export default Signup 

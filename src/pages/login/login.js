@@ -2,6 +2,7 @@ import React from 'react'
 import Form from '../../components/form'
 import Container from '../../components/container/container'
 import { setUser } from '../../infra/local-storage' //--> para salvar no localstorage
+import { loginUser } from '../../apis/login.api' //--> importar função do login API
 
 // function Login() {
 //   return(
@@ -41,36 +42,47 @@ class Login extends React.Component {
 
    //evento de submissão do formulário
 
-  handleSubmit = (e) => {
-    e.preventDefault()
+  handleSubmit = (e) => { //salvar informação de login e senha 
+    e.preventDefault() //não dar submit antes da hora 
     const inputEmail = this.email.current 
     const inputPassword = this.password.current
+    
     const user = {
       email: inputEmail.getValue(),
-      passaword: inputPassword.getValue()
+      password: inputPassword.getValue()
     }
-    
-    setUser(user) //seta o user no localStorage 
-    this.props.history.push('/') //redireciona para a home //history é um array, e push guarda os históricos e redireciona
-     // console.log('hello handleSubmit')
-    
-  }
-  
-  render() {
-    return (
-    <Container>
-      <Form title='Login' text='Entre com seu Email e Senha' onSubmit={this.handleSubmit}>
-          <Form.Label htmlFor='email'>Email:</Form.Label>
-          <Form.Input ref={this.email} id='email' type='email' onChange={this.onDisabledButton} required></Form.Input>
-          <Form.Label>Senha:</Form.Label>
-          <Form.Input ref={this.password} type='password' id='passaword' minLength={6} onChange={() => console.log('olá')} required></Form.Input>
-          <Form.Button disabled={this.state.disabled} type='submit' className='button'>Enviar</Form.Button>
-          <Form.Link href='/signup'>Criar uma conta</Form.Link>
-      </Form>
-    </Container>
-    )
-  }
-}
 
+    //------ CHAMADA PARA A API DO LOGIN (19.11)
 
-export default Login 
+    //chama a função para conferir o login escrito no browser com o login previsto na API
+    loginUser(user) 
+      .then((response) => {
+          //LOCALSTORAGE - Mini banco de dados do browser
+          setUser(user) //seta/salva o user (email e senha) no localStorage 
+          this.props.history.push('/') //redireciona para a home //history é um array, e push guarda os históricos e redireciona
+          // console.log('hello handleSubmit')
+        })
+      .catch((error) => {
+          console.log(error)
+        })
+
+        setUser(user) 
+        this.props.history.push('/')
+      }
+
+      render() {
+        return (
+        <Container>
+          <Form title='Login' text='Entre com seu Email e Senha' onSubmit={this.handleSubmit}>
+              <Form.Label htmlFor='email'>Email:</Form.Label>
+              <Form.Input ref={this.email} id='email' type='email' onChange={this.onDisabledButton} required></Form.Input>
+              <Form.Label>Senha:</Form.Label>
+              <Form.Input ref={this.password} type='password' id='passaword' minLength={6} onChange={() => console.log('olá')} required></Form.Input>
+              <Form.Button disabled={this.state.disabled} type='submit' className='button'>Enviar</Form.Button>
+              <Form.Link href='/signup'>Criar uma conta</Form.Link>
+          </Form>
+        </Container>
+      )}
+   }
+
+   export default Login 

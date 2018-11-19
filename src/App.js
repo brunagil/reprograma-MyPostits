@@ -6,9 +6,11 @@ import Login from './pages/login'
 import Signup from './pages/signup'
 import Home from './pages/home'
 import PageNotFound from './pages/pageNotFound'
+import { startServer } from './infra/api-config'
 
 class App extends Component {
   render() {
+    startServer()
     return (
       <React.Fragment> 
         <Navbar/>

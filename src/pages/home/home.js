@@ -4,4 +4,6 @@ const Home = () => {
     return <div>Hello Home</div>
 }
 
+class Home 
+
 export default Home
