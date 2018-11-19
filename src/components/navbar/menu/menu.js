@@ -1,15 +1,26 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { getUser } from '../../../infra/local-storage'
 import './menu.css'
 
 class Menu extends React.Component {
     constructor(){
       super() 
       this.state = { open : false } //quando desktop, está fechado
+      this.userLoginOrNot = getUser()
     }  
     handleOpenOrClose = () => {
         this.setState({ open: !this.state.open})
     }
+
+    // componentDidMount() {
+    //     console.log('hello componentDidMount')
+
+    // }
+    // componentWillUnmount() {
+    //     console.log('hello componentWillUnmount morreu :(')
+
+    // }
 
     render() {
         let classesOfButton = 'menu__button'
@@ -19,7 +30,6 @@ class Menu extends React.Component {
             classesOfButton += ' menu__button--open'
             classesOfOptions += ' menu__options--open'
         }
-    
 
         return (
             <div>
@@ -38,14 +48,14 @@ class Menu extends React.Component {
                         </Link>    
                     </li>
                     <li>
-                        <Link to='/login'>
-                            Login
-                        </Link>    
+                        <a onCLick={}>
+                            { this.userLoginOrNot ? 'Sair' : 'Login'} 
+                        </a>    
                     </li>
                 </ul>
             </div>
         )
     }
 }
-
+//se VERDADADEIRO - se tem um usuário logado, children é igual a 'sair' e se falso é 'Login'
 export default Menu
