@@ -18,7 +18,7 @@ class Home extends React.Component {
     componentWillUnmount() {
         console.log('hello componentWillUnmount morreu :(')
 
-    }
+    
 
     render() {
         if(getUser()){
