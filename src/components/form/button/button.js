@@ -7,8 +7,14 @@ function Button(props) {
     if(props.disabled) { //se o button conter a classe 'disabled'
         classes += ' button--disabled' //muda o estilo 
     }
+
+    if(props.className) {
+        classes = props.className
+    }
     return (
-       <button disabled = {props.disabled} className={classes} id='btn'>{props.children}</button>
+       <button disabled = {props.disabled} className={classes}>
+            {props.children}
+       </button>
     )  //disabled = true 
 }
 export default Button 

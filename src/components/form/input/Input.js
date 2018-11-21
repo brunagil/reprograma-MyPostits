@@ -19,7 +19,8 @@ class Input extends Component {
     constructor(props){
         super(props)
         this.state={
-            message : null} //estado natural do código quando a página carrega 
+            message : null
+        } //estado natural do código quando a página carrega 
     //this.handleChange = this.handleChange.bind(this) // se for utilizado a arrow function, n precisa dessa função
          this.value = ""
 
@@ -68,7 +69,7 @@ class Input extends Component {
                     onBlur={this.handleChange}                  
                     type={this.props.type}  //componentes funcionais
                     id={this.props.id}
-                    className='input'
+                    className= 'input'
                     placeholder={this.props.placeholder}
                     required={this.props.required}
                 />

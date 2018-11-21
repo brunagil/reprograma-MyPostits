@@ -48,7 +48,7 @@ class Menu extends React.Component {
                         </Link>    
                     </li>
                     <li>
-                        <a onCLick={}>
+                        <a>
                             { this.userLoginOrNot ? 'Sair' : 'Login'} 
                         </a>    
                     </li>

@@ -1,33 +1,24 @@
 import React from 'react'
 import { getUser } from '../../infra/local-storage'
 import { Redirect } from 'react-router-dom'
-
-// const Home = () => {
-//      return <div>Hello Home</div>
-// }
+import PostIt from '../../components/postit'
 
 class Home extends React.Component {
     constructor(){
-      super() 
-    } 
-
-    componentDidMount() {
-        console.log('hello componentDidMount')
-
+        super()
     }
-    componentWillUnmount() {
-        console.log('hello componentWillUnmount morreu :(')
-
-    
-
-    render() {
+    // componentDidMount() {
+    //     console.log('hello componentDidMount foi criado')
+    // }
+    // componentWillUnmount() {
+    //     console.log('hello componentWillUnmount morreu :(')
+    // }
+    render(){
         if(getUser()){
-            return <div>Hello Home</div>
-
-        } else {
-            return <Redirect to='/login' />
+             return <PostIt></PostIt>  
+        }else{
+             return <Redirect to='/login' />
         }
     }
-}
-
+} 
 export default Home
