@@ -12,7 +12,6 @@ class PostIt extends React.Component {
             id: 0, 
             title: '',
             text: '',
-
         }
     }
 
@@ -35,16 +34,16 @@ class PostIt extends React.Component {
             title: this.state.title,
             textarea: this.state.text
         }
-    //-- Camada para a API para salvar os post its criados  // PROMISE
+        //-- Camada para a API para salvar os post its criados  // PROMISE
         createPostit(postit) 
             .then((response) => {
-               console.log(response)
+                console.log(response)
             })
             .catch((error) => {
                 console.log(error)
             })
         }
-
+    
         setTitle = (e) => {
             const inputTitle = e.target.value
             this.setState({ //executa o render de novo e modifica o title com o OnChange do input 
@@ -58,7 +57,6 @@ class PostIt extends React.Component {
                 text : inputText
             })
         }
-
 
     render() {
         return (

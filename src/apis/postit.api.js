@@ -12,6 +12,14 @@ export function createPostit(postit) {
     return api().post(url, data) 
 }
 
+export function getPostitsApi() { //pegar os posts its da API e trazer para o front
+                //não necessita de parâmetros porque já foi cadastrado pelo createPost
+
+    const url = '/todo' //url que a API deve buscar o conteúdo
+
+    return api().get(url)  //metodo GET para pegar os elemntos da API 
+}
+
 export default api
 
 
