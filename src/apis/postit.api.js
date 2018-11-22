@@ -20,6 +20,25 @@ export function getPostitsApi() { //pegar os posts its da API e trazer para o fr
     return api().get(url)  //metodo GET para pegar os elemntos da API 
 }
 
+//-- function DELETAR 
+export function deletePostit(idPostit) { //recebe como parâmetro o ID do post it (via backend)
+    const url = `/todo/${idPostit}` //concatena de forma dinâmica o id do post it na URL
+
+    return api().delete(url)
+}
+
+//--function UPDATE TO DO LIST 
+export function updatePostitApi(postit) {
+    const url = `/todo/${postit.id}`
+
+    const data = {
+        title : postit.title,  
+        desc : postit.text 
+    }
+
+    return api().put(url, data)
+}
+
 export default api
 
 

@@ -19,12 +19,12 @@ class Home extends React.Component {
         console.log('hello componentWillUnmount morreu :(')
     }
 
-    getPostits = () => {
-        getPostitsApi()
+    getPostits = () => { //faz a requisição pra API pra retornar a lista de post its cadastradas no backend
+        getPostitsApi() //request API
             .then((response) => {
                 console.log(response)
                 this.setState({
-                    postits : response.data.todo
+                    postits : response.data.todo  //lista todos os post its
                 })
             })
             .catch((error) => {
@@ -33,11 +33,23 @@ class Home extends React.Component {
     }
 
     render(){
-        if(getUser()){
-             return this.state.postits.map((item) => { //For simplificado
+        if(getUser()){ //se tiver um user logado
+             return ( 
+                <div className='home'>
+                    <PostIt updatePostits = {this.getPostits}/> 
+                    {this.state.postits.map((item, index) =>{ //for simplificado, que itera pelos post its
                             console.log('item', item)
-                            return <PostIt />
-                        })
+                            return <PostIt 
+                                key={item._id} //props do React (identificador da lista de elementos)
+                                id={item._id}
+                                title={item.title}
+                                text={item.desc}
+                                updatePostits = {this.getPostits} //atualiza os post its, chamando essa function quando 
+                                //o post it for concluído
+                            />
+                    })}
+                </div>
+             )
         } else {
              return <Redirect to='/login' />
         }

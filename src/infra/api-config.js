@@ -18,11 +18,11 @@ const config = {  //criação do objeto com a URL
 //criar uma função para evitar travamentos do servidor no início
 
 function api(){
-    const user_logado = getUser()
+    const user = getUser()
 
-    if(user_logado) { //se tiver usuário logado
+    if(user) { //se tiver usuário logado
         config.headers = {
-        user : user_logado //pega os dados do usuário logado e permite que os post its aconteçam
+        user : user//pega os dados do usuário logado e permite que os post its aconteçam
         }
     }
     return axios.create(config) //retorna a função pronta da configuração
