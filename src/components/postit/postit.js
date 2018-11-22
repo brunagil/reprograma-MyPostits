@@ -12,6 +12,7 @@ class PostIt extends React.Component {
             id: this.props.id ? this.props.id : null, 
             title: this.props.title ? this.props.title : '',
             text: this.props.text ? this.props.text : '',
+            color: this.props.color ? this.props.color : '#ECDDF3'
         }
     }
 
@@ -26,7 +27,7 @@ class PostIt extends React.Component {
 
     handlePostitDelete = (e) => { 
         // console.log('handlePostitDelete')
-        e.stopPropagation()
+        e.stopPropagation() //evita que o 'OnSubmit' aconteça. Ele não propaga a ação apenas para o botão sem continuar para os outros elementos
 
         const id = this.state.id
         deletePostit(id)
@@ -41,22 +42,25 @@ class PostIt extends React.Component {
     
     //--Submeter e salvar o post it na tela 
     handlePostitSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault() //previne que atualize a página f5
         const postit = { //constante que contém todo o conteúdo do postit 
             title: this.state.title,
             text: this.state.text
         }
-        if(this.state.id) {
+        if(this.state.id) { //SE o post it já existir/já tiver sido salvo, ele já foi cadastrado e já apresenta um id
             const postit = {
-                title: this.state.title,
-                text: this.state.text,
-                id : this.state.id
+                title : this.state.title,
+                id : this.state.id,
+                text : this.state.text,
+                color: this.state.color
            }
             
-            updatePostitApi(postit)
-                .then((response) => {
-   
-                    
+            updatePostitApi(postit) //atualiza com o que foi escrito de NOVO no post it 
+                .then((response) => { 
+                    this.setState({ //muda o estado do post it para edição: 'fechada'
+                        editing : false
+                    })
+
                 })
                 .catch((error) => {
                 })
@@ -67,16 +71,18 @@ class PostIt extends React.Component {
             const postit = {
                 title: this.state.title,
                 text: this.state.text,
-                id : this.state.id
+                id : this.state.id,
+                color: this.state.id
            }
             createPostit(postit) 
                 .then((response) => {
                     console.log(response)
                     this.props.updatePostits() //atualizar os posts its na tela por props
-                    this.setState({
+                    this.setState({ //limpa o post it, setando para o estado inicial mais uma vez
                         id:'',
                         title:'',
                         text:'',
+                        color: '#ECDDF3',
                         editing: false
                     })
                 })
@@ -98,12 +104,19 @@ class PostIt extends React.Component {
             this.setState ({ //executa o render de novo e modifica o conteúdo com o OnChange do text
                 text : inputText
             })
+        }
 
+        setColor = (e) => {
+            e.stopPropagation()
+            this.setState({
+                color: e.target.value
+            })
         }
 
     render() {
         return (
-            <div className='postit' onClick={this.handlePostitClick} >
+            <div className='postit' onClick={this.handlePostitClick} style={{ background: this.state.color}} >
+                <input className='postit__color' type='color' onChange={this.setColor} />
                 <Form onSubmit={this.handlePostitSubmit}>
                     {this.state.editing && 
                         (<button
