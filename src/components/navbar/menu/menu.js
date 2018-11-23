@@ -1,25 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { getUser } from '../../../infra/local-storage'
 import './menu.css'
 
 class Menu extends React.Component {
-    constructor(){
-      super() 
-      this.state = { open : false } //quando desktop, está fechado
-      this.userLoginOrNot = getUser()
+    constructor(props){
+      super(props) 
+      this.state = { open : false } //quando desktop, está fechado      
     }  
+
+    //Função do menu estar aberto ou fechado
     handleOpenOrClose = () => {
-        this.setState({ open: !this.state.open})
+        this.setState({ open: !this.state.open}) //se verdadeiro, abre; se falso, fecha
     }
 
+    handleLoginOrLogout = (e) => {
+        e.preventDefault() 
+        if(this.props.user) { //se tiver um usuário logado
+            localStorage.clear() //limpa o user local 
+        } 
+        this.props.history.push('/login') //recebe props, que contém history
+        //redireciona para a página de Login 
+
+    }
+
+    //O que é DidMount e WillUnMount? Testes com console.log
     // componentDidMount() {
     //     console.log('hello componentDidMount')
-
     // }
     // componentWillUnmount() {
     //     console.log('hello componentWillUnmount morreu :(')
-
     // }
 
     render() {
@@ -48,8 +57,8 @@ class Menu extends React.Component {
                         </Link>    
                     </li>
                     <li>
-                        <a>
-                            { this.userLoginOrNot ? 'Sair' : 'Login'} 
+                        <a onClick={this.handleLoginOrLogout}>
+                            { this.props.user ? 'Sair' : 'Login'}
                         </a>    
                     </li>
                 </ul>

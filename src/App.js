@@ -8,6 +8,7 @@ import Home from './pages/home'
 import Alert from './components/Alert'
 import PageNotFound from './pages/pageNotFound'
 import { startServer } from './infra/api-config'
+import { getUser } from './infra/local-storage'
 
 
 //construtor é utilizado apenas para definir variáveis e states 
@@ -31,7 +32,7 @@ class App extends Component {
   }
 
   //é o APP.JS que manda como funciona o closeAlert
-
+  //cria função de fechamento do alerta apertando o botão 'ok'
   closeAlert = () => {
     this.setState({
       openAlert : false
@@ -53,11 +54,12 @@ class App extends Component {
   componentDidMount() {
     startServer()
   }
-
+  //quando renderiza a tela, ele renderiza o user 
   render() {
+    this.user = getUser()
     return (
       <React.Fragment> 
-        <Navbar history={this.props.history}/>
+        <Navbar history={this.props.history} user={this.user}/>
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/login' render={ (routerProps)=><Login showAlert={this.showAlert} {...routerProps} />}/> 

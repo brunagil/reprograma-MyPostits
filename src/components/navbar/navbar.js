@@ -4,7 +4,8 @@ import Menu from './menu'
 import logo from './logo-reprograma.png'
 import './navbar.css'
 
-const Navbar = () => (
+//precisa receber props para que o Menu possa receber o user por props
+const Navbar = (props) => ( 
     <nav className= 'navbar'>
         <Link to='/'>
             <img 
@@ -13,8 +14,8 @@ const Navbar = () => (
                 alt='logo da reprograma'
                 />
         </Link>
-        <Menu />
+        <Menu {...props} /> 
     </nav>
 )
 
-export default Navbar
+export default Navbar   
