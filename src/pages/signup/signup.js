@@ -51,7 +51,8 @@ class Signup extends React.Component {
     signupUser(user)
       .then((response) => {
         setUser({email : user.email})
-          this.props.history.push('/') 
+          this.props.history.push('/')
+          this.props.showAlert('Usuário cadastrado com sucesso :)') 
       })
     .catch((error) => {
         console.log(error)

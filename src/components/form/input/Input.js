@@ -23,14 +23,11 @@ class Input extends Component {
         } //estado natural do código quando a página carrega 
     //this.handleChange = this.handleChange.bind(this) // se for utilizado a arrow function, n precisa dessa função
          this.value = ""
-
     }
 
     getValue = () => {
         return this.value 
-
     }
-
 
     hasError = () => {
         if(this.state.message === null || this.state.message !=='') {
